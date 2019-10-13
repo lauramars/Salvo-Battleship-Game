@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Salvo!!!</title>
+</head>
+<body>
+<div id="gamesApp">
+
+<p> Salvo Game</p>
+
+<table>
+    <tr>
+        <th>Game</th>
+        <th>Player 1</th>
+        <th>Player2</th>
+    </tr>
+
+    <tr v-for="game in games" v-if="games.length > 0">
+        <td >{{game.date}}</td>
+        <td v-for="gp in game.gamePlayers">{{gp.players.userName}}</td>
+    </tr>
+    
+</table>
+
+</div>
+<script src="//cdnjs.cloudflare.com/ajax/libs/moment.js/2.17.1/moment.min.js"></script>
+<script src="https://unpkg.com/vue/dist/vue.js"></script>
+<script src="./games.js"></script>
+</body>
+</html>

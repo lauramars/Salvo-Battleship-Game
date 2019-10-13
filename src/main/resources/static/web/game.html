@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="game.css">
+    <title>Battleship</title>
+</head>
+
+<body>
+
+    <div id="gridApp">
+
+        <h1 class="battleTitle">BATTLESHIP</h1>
+
+        <div class="grid-container">
+
+            <div>
+                <p> SHIP GRID
+                    <br>
+                    <br>
+                    Current Player: {{currentPlayer.userName}}
+                </p>
+                <table class="gridTable">
+                    <thead>
+                        <tr>
+                            <th></th>
+                            <th v-for="number in numbers">
+                                {{number}}
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr v-for="letter in letters">
+                            <td>
+                                {{letter}}
+                            </td>
+                            <td class="cells" v-for="number in numbers" :id="'U'+letter+number"
+                                :class="addCell(letter+number)">
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div>
+                <p v-if="enemyPlayer.length > 0"> SALVO GRID
+                    <br>
+                    <br>
+                    VS. {{enemyPlayer[0].players.userName}}
+
+                </p>
+                <table class="gridTable">
+                    <thead>
+                        <tr>
+                            <th></th>
+                            <th v-for="number in numbers">
+                                {{number}}
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr v-for="letter in letters">
+                            <td>
+                                {{letter}}
+                            </td>
+                            <td class="cells" v-for="number in numbers" :id="'E'+letter+number"
+                            :class="addEnemyCell(letter+number)" v-if="getTurn.length!==null">
+                            
+                             
+                            
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+        </div>
+    </div>
+</body>
+<script src="https://unpkg.com/vue/dist/vue.js"></script>
+<script src="game.js"></script>
+
+</html>

@@ -1,0 +1,36 @@
+
+
+.grid-container {
+    display: grid;
+    grid-template-columns: auto auto;
+}
+
+.battleTitle{
+    text-align: center
+}
+
+.gridTable, td, th{
+    margin-right: 20px;
+    padding: 15px;
+    border-collapse: collapse
+}
+
+.gridTable td{
+    width: 15px;
+    height: 15px;
+}
+
+.cells{
+    border: 1px solid black;
+    background-color: aquamarine;
+}
+
+.ship-location {
+    background: blue;
+}
+.missed-location {
+    background: grey
+}
+.hit-location {
+    background: red;
+}

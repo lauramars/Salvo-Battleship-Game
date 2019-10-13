@@ -1,0 +1,21 @@
+<!DOCTYPE HTML>
+<html>
+<head> <title>Player Manager</title> </head>
+<body>
+    <div id="manager">
+<h1>Player Manager</h1>
+
+<form action="" onsubmit="return false">
+    <label>Email User Name [e.g., alice@aol.com]: <input  id="email" type="text" size="30"></label>
+    <button id="add_Player" v-on:click="addPlayer" type="submit">Add</button>
+    <br>
+    <p >{{userName}}</p>
+    <pre id="output"></pre>
+</form>
+
+</div>
+<script src="https://unpkg.com/vue/dist/vue.js"></script>
+<script src="./manager.js"></script>
+
+</body>
+</html>
