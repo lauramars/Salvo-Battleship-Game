@@ -4,36 +4,33 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
-import java.util.List;
-import java.util.Set;
-import java.util.stream.Collectors;
+import java.util.Date;
 
 @Entity
-public class GamePlayer {
+public class Score {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO, generator = "native")
     @GenericGenerator(name = "native", strategy = "native")
     private long id;
+    private double score;
+    private Date date= new Date ();
 
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name="player_id")
     private Player player;
 
+
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name="game_id")
     private Game game;
 
-    @OneToMany(mappedBy = "gamePlayer", fetch = FetchType.EAGER)
-    Set<Ship> ships;
 
-    @OneToMany(mappedBy = "gamePlayer", fetch = FetchType.EAGER)
-    Set<Salvo> salvo;
+    public Score(){}
 
+    public Score(double score, Player player, Game game) {
 
-    public GamePlayer(){}
-
-    public GamePlayer(Player player, Game game) {
+        this.score = score;
         this.player = player;
         this.game = game;
     }
@@ -42,11 +39,25 @@ public class GamePlayer {
         return id;
     }
 
-
     public void setId(long id) {
         this.id = id;
     }
 
+    public double getScore() {
+        return score;
+    }
+
+    public void setScore(double score) {
+        this.score = score;
+    }
+
+    public Date getDate() {
+        return date;
+    }
+
+    public void setDate(Date date) {
+        this.date = date;
+    }
 
     public Player getPlayer() {
         return player;
@@ -56,7 +67,6 @@ public class GamePlayer {
         this.player = player;
     }
 
-    @JsonIgnore
     public Game getGame() {
         return game;
     }
@@ -65,30 +75,6 @@ public class GamePlayer {
         this.game = game;
     }
 
-    public Set<Ship> getShips() {
-        return ships;
-    }
-
-    public void setShips(Set<Ship> ships) {
-        this.ships = ships;
-    }
-
-    public Set<Salvo> getSalvo() {
-        return salvo;
-    }
-
-    public void setSalvo(Set<Salvo> salvo) {
-        this.salvo = salvo;
-    }
-
-   public Score getScore(){
-        return this.getPlayer().getScores()
-                .stream()
-                .filter(score->score.getGame().getId()== this.getGame().getId())
-                .findFirst().orElse(null);
-   }
 
 }
-
-
 

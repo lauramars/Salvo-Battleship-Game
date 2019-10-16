@@ -55,31 +55,33 @@ var gridApp= new Vue ({
 
         this.createAllShipLocationArray();
         this.createAllSalvoUserLocationArray();
-        this.getTurn();
+        this.getTurn(cellId);
         
 
     },
 
-    getTurn(){
+    // ???
+    getTurn(cellId){
         
         for (let i=0; i<this.turn.length; i++)
+        if (this.allSalvosUserLocation.includes(cellId)){
+            return this.turn
+        }
 
-        console.log(this.turn[i])
+        // console.log(this.turn[i])
         
 
     },
 
     addEnemyCell(cellId) {
-        if (this.allSalvosUserLocation.includes(cellId)){
 
-            return `missed-location`
+        if (this.allSalvosUserLocation.includes(cellId)){
+            return `missed-location` 
         }
     },
   
 
     addCell(cellId){
-
-      
 
     if (this.allShipsLocation.includes(cellId)) {
             return `ship-location`

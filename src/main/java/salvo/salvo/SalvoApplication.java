@@ -23,7 +23,8 @@ public class SalvoApplication {
 									  GameRepository gameRepository,
 									  GamePlayerRepository gamePlayerRepository,
 									  ShipRepository shipRepository,
-									  SalvoRepository salvoRepository
+									  SalvoRepository salvoRepository,
+									  ScoreRepository scoreRepository
 	){
 		return (args)->{
 
@@ -68,37 +69,30 @@ public class SalvoApplication {
 			gamePlayerRepository.save(gamePlayerOne);
 			GamePlayer gamePlayerTwo = new GamePlayer(playerTwo, gameOne);
 			gamePlayerRepository.save(gamePlayerTwo);
-
 			GamePlayer gamePlayerThree= new GamePlayer (playerOne, gameTwo);
 			gamePlayerRepository.save(gamePlayerThree);
 			GamePlayer gamePlayerFour= new GamePlayer (playerTwo, gameTwo);
 			gamePlayerRepository.save(gamePlayerFour);
-
            GamePlayer gamePlayerFive= new GamePlayer(playerTwo, gameThree);
            gamePlayerRepository.save(gamePlayerFive);
            GamePlayer gamePlayerSix= new GamePlayer(playerFour, gameThree);
            gamePlayerRepository.save(gamePlayerSix);
-
-			GamePlayer gamePlayerSeven= new GamePlayer(playerTwo, gameFour);
-			gamePlayerRepository.save(gamePlayerSeven);
-			GamePlayer gamePlayerHeight= new GamePlayer(playerOne, gameFour);
-			gamePlayerRepository.save(gamePlayerHeight);
-
-			GamePlayer gamePlayerNine= new GamePlayer(playerFour, gameFive);
-			gamePlayerRepository.save(gamePlayerNine);
-			GamePlayer gamePlayerTen= new GamePlayer(playerOne, gameFive);
-			gamePlayerRepository.save(gamePlayerTen);
-
-			GamePlayer gamePlayerEleven= new GamePlayer(playerThree, gameSix);
-			gamePlayerRepository.save(gamePlayerEleven);
-
-			GamePlayer gamePlayerTwelve= new GamePlayer(playerFour, gameSeven);
-			gamePlayerRepository.save(gamePlayerTwelve);
-
-			GamePlayer gamePlayerThirteen= new GamePlayer(playerThree, gameHeight);
-			gamePlayerRepository.save(gamePlayerThirteen);
-			GamePlayer gamePlayerFourteen=new GamePlayer (playerFour, gameHeight);
-			gamePlayerRepository.save(gamePlayerFourteen);
+           GamePlayer gamePlayerSeven= new GamePlayer(playerTwo, gameFour);
+           gamePlayerRepository.save(gamePlayerSeven);
+           GamePlayer gamePlayerHeight= new GamePlayer(playerOne, gameFour);
+           gamePlayerRepository.save(gamePlayerHeight);
+           GamePlayer gamePlayerNine= new GamePlayer(playerFour, gameFive);
+           gamePlayerRepository.save(gamePlayerNine);
+           GamePlayer gamePlayerTen= new GamePlayer(playerOne, gameFive);
+           gamePlayerRepository.save(gamePlayerTen);
+           GamePlayer gamePlayerEleven= new GamePlayer(playerThree, gameSix);
+           gamePlayerRepository.save(gamePlayerEleven);
+           GamePlayer gamePlayerTwelve= new GamePlayer(playerFour, gameSeven);
+           gamePlayerRepository.save(gamePlayerTwelve);
+           GamePlayer gamePlayerThirteen= new GamePlayer(playerThree, gameHeight);
+           gamePlayerRepository.save(gamePlayerThirteen);
+           GamePlayer gamePlayerFourteen=new GamePlayer (playerFour, gameHeight);
+           gamePlayerRepository.save(gamePlayerFourteen);
 
 
 			List<String> locationOne = Arrays.asList("H2","H3", "H4");
@@ -274,8 +268,29 @@ public class SalvoApplication {
 
 
 
+			Score scoreOne= new Score (1, playerOne, gameOne);
+			scoreRepository.save(scoreOne);
+          
+           Score scoreTwo =new Score (0, playerTwo, gameOne);
+           scoreRepository.save(scoreTwo);
 
+           Score scoreThree= new Score (0.5, playerOne, gameTwo);
+           scoreRepository.save(scoreThree);
 
+           Score scoreFour = new Score (0.5, playerTwo, gameTwo);
+           scoreRepository.save(scoreFour);
+
+           Score scoreFive = new Score(1, playerOne, gameThree);
+           scoreRepository.save(scoreFive);
+
+           Score scoreSix = new Score (0, playerFour, gameThree);
+           scoreRepository.save (scoreSix);
+
+           Score scoreSeven = new Score (0.5, playerTwo, gameFour);
+			scoreRepository.save (scoreSeven);
+
+			Score scoreHeight = new Score (0.5, playerOne, gameFour);
+			scoreRepository.save (scoreHeight);
 
 		};
 	}

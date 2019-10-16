@@ -20,8 +20,8 @@ public class SalvoController<SalvoRepository> {
     private GameRepository gameRepository;
     @Autowired
     private GamePlayerRepository gamePlayerRepository;
-//    @Autowired
-//    private SalvoRepository salvoRepository;
+    @Autowired
+    private ScoreRepository scoreRepository;
 
     @RequestMapping("/api/games")
     public List<Map<String,Object>> getAllGames() {
@@ -30,6 +30,15 @@ public class SalvoController<SalvoRepository> {
                 .map(game -> gameDTO(game))
                 .collect(Collectors.toList());
     }
+
+    public List<Map<String,Object>> getAllScores(){
+        return scoreRepository.findAll()
+                .stream()
+                .map(score -> scoreDTO(score))
+                .collect(Collectors.toList());
+    }
+
+
 
     @RequestMapping("/api/games_view/{gamePlayerId}")
     private Map<String,Object> gameView (@PathVariable long gamePlayerId) {
@@ -45,12 +54,13 @@ public class SalvoController<SalvoRepository> {
                 map.put("userSalvos", user.getSalvo().stream().map(salvo -> salvoDTO(salvo)).collect(Collectors.toList()));
                 map.put("enemySalvos", enemy.getSalvo().stream().map(salvo -> salvoDTO(salvo)).collect(Collectors.toList()));
             }
+
         } else {
             map.put("error","Error: User Not Found");
         }
-
         return map;
     }
+
 
     private GamePlayer getEnemy (GamePlayer gamePlayer) {
         return gamePlayer
@@ -61,7 +71,6 @@ public class SalvoController<SalvoRepository> {
                 .findFirst()
                 .orElse(null);
     }
-
 
 
     private Map<String,Object> gameDTO (Game game) {
@@ -77,23 +86,24 @@ public class SalvoController<SalvoRepository> {
         return map;
     }
 
+
     private Map<String, Object> gamePlayerDTO(GamePlayer gamePlayer){
             Map<String, Object> map = new LinkedHashMap<String, Object>();
 
             map.put("id", gamePlayer.getId());
             map.put("players", playerDTO(gamePlayer.getPlayer()));
-
         return map;
     }
+
 
     private Map<String, Object> playerDTO(Player player){
         Map<String, Object> map = new LinkedHashMap<String, Object>();
 
         map.put("id", player.getId());
         map.put("userName", player.getUserName());
-
         return map;
     }
+
 
     private Map<String, Object> shipDTO(Ship ship){
         Map<String, Object> map= new LinkedHashMap<String, Object>();
@@ -107,8 +117,15 @@ public class SalvoController<SalvoRepository> {
         map.put("turn", salvo.getTurn());
         map.put("locations",salvo.getLocation());
         return map;
-
     }
 
+
+    private Map<String, Object> scoreDTO(Score score){
+        Map<String, Object> map =new LinkedHashMap<>();
+        map.put("score", score.getScore());
+        map.put ("game", score.getGame());
+        map.put ("player", score.getPlayer());
+        return map;
+    }
 }
 

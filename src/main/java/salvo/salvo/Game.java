@@ -21,6 +21,10 @@ public class Game {
     @OneToMany(mappedBy="game", fetch=FetchType.EAGER)
     Set<GamePlayer> gamePlayer;
 
+    @OneToMany(mappedBy="game", fetch=FetchType.EAGER)
+    Set<Score> scores;
+
+
     public Game(){ }
 
     public long getId() {
@@ -46,6 +50,18 @@ public class Game {
     public void setGamePlayer(Set<GamePlayer> gamePlayer) {
         this.gamePlayer = gamePlayer;
     }
+
+
+    public Set<Score> getScores() {
+        return scores;
+    }
+
+    public void setScores(Set<Score> scores) {
+        this.scores = scores;
+    }
+
+
+
     @JsonIgnore
      public List<Player> getPlayers() {
         return  this.getGamePlayer()
@@ -53,4 +69,6 @@ public class Game {
                 .map(gamePlayer -> gamePlayer.getPlayer())
                 .collect(Collectors.toList());
     }
+
+
 }
