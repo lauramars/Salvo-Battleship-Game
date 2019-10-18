@@ -81,6 +81,7 @@ public class GamePlayer {
         this.salvo = salvo;
     }
 
+    @JsonIgnore
    public Score getScore(){
         return this.getPlayer().getScores()
                 .stream()

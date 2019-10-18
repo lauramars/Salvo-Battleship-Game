@@ -59,6 +59,7 @@ public class Score {
         this.date = date;
     }
 
+    @JsonIgnore
     public Player getPlayer() {
         return player;
     }
@@ -67,6 +68,7 @@ public class Score {
         this.player = player;
     }
 
+    @JsonIgnore
     public Game getGame() {
         return game;
     }

@@ -22,6 +22,9 @@ public class SalvoController<SalvoRepository> {
     private GamePlayerRepository gamePlayerRepository;
     @Autowired
     private ScoreRepository scoreRepository;
+    @Autowired
+    private PlayerRepository playerRepository;
+
 
     @RequestMapping("/api/games")
     public List<Map<String,Object>> getAllGames() {
@@ -60,6 +63,51 @@ public class SalvoController<SalvoRepository> {
         }
         return map;
     }
+
+    @RequestMapping("/api/scores")
+
+    public List<Object> getAllPlayersScores(){
+        Map<String, Object> map = new LinkedHashMap<>();
+
+      return playerRepository.findAll()
+              .stream()
+              .map(player -> calculateScores(player.getScores()))
+              .collect(Collectors.toList());
+
+    }
+
+
+    public Map<String,Object> calculateScores (Set<Score> scores) {
+        Map<String,Object> map  = new LinkedHashMap<>();
+
+        int wins = 0;
+
+        int loses = 0;
+        int ties = 0;
+        double totalPoints = 0;
+
+        for (Score score : scores) {
+            if( score.getScore() == 1){
+                wins++;
+            }
+            if( score.getScore() == 0){
+                loses++;
+            }
+            if( score.getScore() == 0.5){
+                ties++;
+            }
+   totalPoints+=score.getScore();
+        }
+
+        map.put("win", wins);
+        map.put("loss", loses);
+        map.put("tie", ties);
+        map.put("score", scores);
+
+        
+        return map;
+    }
+
 
 
     private GamePlayer getEnemy (GamePlayer gamePlayer) {

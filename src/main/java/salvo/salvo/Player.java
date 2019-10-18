@@ -60,6 +60,7 @@ public class Player {
         this.gamePlayer = gamePlayer;
     }
 
+    @JsonIgnore
 
     public Set<Score> getScores() {
         return scores;

@@ -51,7 +51,7 @@ public class Game {
         this.gamePlayer = gamePlayer;
     }
 
-
+    @JsonIgnore
     public Set<Score> getScores() {
         return scores;
     }

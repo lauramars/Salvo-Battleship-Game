@@ -49,23 +49,21 @@ var gridApp= new Vue ({
         this.game = this.data.game;
         this.enemyPlayer= this.game.gamePlayers.filter(el=>el.players.userName != this.currentPlayer.userName)
         this.turn=this.userSalvos.map(el=>el.turn);
-        
 
         
 
         this.createAllShipLocationArray();
         this.createAllSalvoUserLocationArray();
-        this.getTurn(cellId);
-        
-
+        this.getTurn();
+    
     },
 
     // ???
-    getTurn(cellId){
+    getTurn(){
         
         for (let i=0; i<this.turn.length; i++)
-        if (this.allSalvosUserLocation.includes(cellId)){
-            return this.turn
+        {
+            return this.allSalvosUserLocation.push(this.turn[i])
         }
 
         // console.log(this.turn[i])
