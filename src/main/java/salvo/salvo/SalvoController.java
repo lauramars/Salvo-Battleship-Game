@@ -69,19 +69,19 @@ public class SalvoController<SalvoRepository> {
     public List<Object> getAllPlayersScores(){
         Map<String, Object> map = new LinkedHashMap<>();
 
+
       return playerRepository.findAll()
               .stream()
-              .map(player -> calculateScores(player.getScores()))
+              .map(player -> calculateScores(player))
               .collect(Collectors.toList());
 
     }
 
-
-    public Map<String,Object> calculateScores (Set<Score> scores) {
+    public Map<String,Object> calculateScores (Player player) {
         Map<String,Object> map  = new LinkedHashMap<>();
+        Set<Score> scores = player.getScores();
 
         int wins = 0;
-
         int loses = 0;
         int ties = 0;
         double totalPoints = 0;
@@ -96,15 +96,14 @@ public class SalvoController<SalvoRepository> {
             if( score.getScore() == 0.5){
                 ties++;
             }
-   totalPoints+=score.getScore();
+            totalPoints += score.getScore();
         }
-
+        map.put("name", player.getUserName());
         map.put("win", wins);
         map.put("loss", loses);
         map.put("tie", ties);
-        map.put("score", scores);
+        map.put("score", totalPoints);
 
-        
         return map;
     }
 

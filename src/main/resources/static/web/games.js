@@ -1,7 +1,3 @@
-console.log("hello")
-
-let date=moment().startOf('hour').fromNow()
-console.log(date)
 
 var gamesApp = new Vue({
    el: "#gamesApp",
@@ -14,10 +10,17 @@ var gamesApp = new Vue({
       players: {},
       userName: "",
       date: [],
+      actualDate:[],
+      score:[],
+      scores:[],
+      totalScore:[],
+      userScore:[],
+      scoreArray:[],
    },
 
    created() {
       this.gameData();
+      this.scoreData();
       
    },
 
@@ -44,14 +47,33 @@ var gamesApp = new Vue({
          this.games.forEach(element => {
             console.log(element.date);
          }); 
-  
-         
+       
+         this.stringDate= this.games.forEach(element =>element.date).toLocaleString();
+
+         console.log(this.stringDate)
       },
 
-      getTime(){
-         return date=moment().startOf('hour').fromNow()
+
+      async scoreData(){
+           let url= "/api/scores/"
+
+           this.data = await fetch(url, {
+            method: "GET",
+            credentials: "include",
+         })
+            .then(response => response.json())
+            .then(data => {
+               console.log(data)
+               return data
+            })
+            .catch(error => console.log(error))
+
+         this.scores=this.data;
+         this.win=this.scores.win;
+         this.loss=this.scores.loss;
+         this.tie=this.scores.tie;
          
-      }
+      },
 
    }
 })

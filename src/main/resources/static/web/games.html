@@ -1,31 +1,62 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
+    <link rel="stylesheet" href="games.css">
     <title>Salvo!!!</title>
 </head>
+
 <body>
-<div id="gamesApp">
+    <div id="gamesApp">
+        
+        <div class="grid-container">
+            
+            <div>
+            <p><h3>Salvo Games</h3></p>
+            <table class="infoTable">
+                <tr>
+                    <th>Games</th>
+                    <th>Player 1</th>
+                    <th>Player2</th>
+                </tr>
 
-<p> Salvo Game</p>
+                <tr v-for="game in games" v-if="games.length > 0">
+                    <td>{{game.date}}</td>
+                    <td v-for="gp in game.gamePlayers">{{gp.players.userName}}</td>
+                </tr>
+            </table>
+        </div>
 
-<table>
-    <tr>
-        <th>Games</th>
-        <th>Player 1</th>
-        <th>Player2</th>
-    </tr>
+            <br>
+            <br>
 
-    <tr v-for="game in games" v-if="games.length > 0">
-        <td >{{game.date}}</td>
-        <td v-for="gp in game.gamePlayers">{{gp.players.userName}}</td>
-    </tr>
-    
-</table>
+            <div>
+                <p><h3>Scores</h3></p>
+                <table class="infoTable">
+                <tr>
+                    <th>Name</th>
+                    <th>Total</th>
+                    <th>Won</th>
+                    <th>Lost</th>
+                    <th>Tied</th>
+                </tr>
+                <tr v-for="score in scores">
+                    <td>{{score.name}}</td>
+                    <td>{{score.score}}</td>
+                    <td>{{score.win}}</td>
+                    <td>{{score.loss}}</td>
+                    <td>{{score.tie}}</td>
+                </tr>
+            </table>
+        </div>
 
-</div>
-<script src="//cdnjs.cloudflare.com/ajax/libs/moment.js/2.17.1/moment.min.js"></script>
-<script src="https://unpkg.com/vue/dist/vue.js"></script>
-<script src="./games.js"></script>
+        </div>
+    </div>
+
+    <script src="//cdnjs.cloudflare.com/ajax/libs/moment.js/2.17.1/moment.min.js"></script>
+    <script src="https://unpkg.com/vue/dist/vue.js"></script>
+    <script src="./games.js"></script>
 </body>
+
 </html>
