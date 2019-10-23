@@ -1,4 +1,15 @@
+body{
+    width: 100%;
+    margin:0;
+   
+}
 
+.header{
+background-color: teal;
+width: 100%;
+padding-top: 9px;
+padding-bottom: 5px
+}
 
 .grid-container {
     display: grid;
@@ -6,7 +17,18 @@
 }
 
 .battleTitle{
-    text-align: center
+    text-align: center;
+    background-color: teal;
+}
+
+.ships{
+    margin-left: 30%;
+    margin-bottom: -5%;
+}
+
+.user{
+    margin-left: 23%;
+    margin-bottom: 2%;
 }
 
 .gridTable, td, th{
@@ -29,7 +51,7 @@
     background: blue;
 }
 .missed-location {
-    background: grey
+    background: grey;
 }
 .hit-location {
     background: red;

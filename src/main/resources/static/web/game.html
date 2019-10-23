@@ -10,16 +10,17 @@
 <body>
 
     <div id="gridApp">
-
+<div class="header">
         <h1 class="battleTitle">BATTLESHIP</h1>
-
+    </div>
         <div class="grid-container">
 
             <div>
-                <p> SHIP GRID
+                <h3 class="ships"> SHIP GRID </h3>
                     <br>
                     <br>
-                    Current Player: {{currentPlayer.userName}}
+                   <p class="user"> 
+                       Current Player: {{currentPlayer.userName}}
                 </p>
                 <table class="gridTable">
                     <thead>
@@ -44,11 +45,11 @@
             </div>
 
             <div>
-                <p v-if="enemyPlayer.length > 0"> SALVO GRID
+                 <h3 class="ships">SALVO GRID</h3>
                     <br>
                     <br>
-                    VS. {{enemyPlayer[0].players.userName}}
-
+                    <p class="user" v-if="enemyPlayer.length > 0">
+                         VS. {{enemyPlayer[0].players.userName}}
                 </p>
                 <table class="gridTable">
                     <thead>

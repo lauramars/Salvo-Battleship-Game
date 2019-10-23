@@ -1,3 +1,4 @@
+console.log(moment().startOf('date').fromNow());
 
 var gamesApp = new Vue({
    el: "#gamesApp",
@@ -44,14 +45,44 @@ var gamesApp = new Vue({
          this.games = this.data;
          console.log(this.games)
 
+         
          this.games.forEach(element => {
-            console.log(element.date);
+            console.log(this.timeConversion(this.getWhenGameStarted(element.date)));
          }); 
-       
-         this.stringDate= this.games.forEach(element =>element.date).toLocaleString();
 
-         console.log(this.stringDate)
+         this.games.forEach(element => {
+         console.log(moment().startOf().fromNow(element.date));
+         })
+
       },
+
+      getWhenGameStarted(date) {
+         let currentTime = new Date().getTime();
+         let gameDate = new Date(date).getTime();
+
+         return currentTime - gameDate;
+      },
+
+      timeConversion(millisec) {
+
+         var seconds = (millisec / 1000).toFixed(1);
+ 
+         var minutes = (millisec / (1000 * 60)).toFixed(1);
+ 
+         var hours = (millisec / (1000 * 60 * 60)).toFixed(1);
+ 
+         var days = (millisec / (1000 * 60 * 60 * 24)).toFixed(1);
+ 
+         if (seconds < 60) {
+             return seconds + " Sec Ago";
+         } else if (minutes < 60) {
+             return minutes + " Min Ago";
+         } else if (hours < 24) {
+             return hours + " Hrs Ago";
+         } else {
+             return days + " Days Ago"
+         }
+     },
 
 
       async scoreData(){

@@ -29,7 +29,7 @@ public class SalvoApplication {
 		return (args)->{
 
 
-			Player playerOne= new Player("j.bauer@ctu.gov");
+			Player playerOne= new Player("j.bauer@ctu.gov" );
 			playerRepository.save(playerOne);
 			Player playerTwo= new Player("c.obrian@ctu.gov");
 			playerRepository.save(playerTwo);

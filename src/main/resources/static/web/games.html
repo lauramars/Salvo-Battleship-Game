@@ -12,8 +12,8 @@
         
         <div class="grid-container">
             
-            <div>
-            <p><h3>Salvo Games</h3></p>
+            <div class="gridOne">
+            <p><h3 class="infoH">Salvo Games</h3></p>
             <table class="infoTable">
                 <tr>
                     <th>Games</th>
@@ -22,7 +22,7 @@
                 </tr>
 
                 <tr v-for="game in games" v-if="games.length > 0">
-                    <td>{{game.date}}</td>
+                    <td>{{timeConversion(getWhenGameStarted(game.date))}}</td>
                     <td v-for="gp in game.gamePlayers">{{gp.players.userName}}</td>
                 </tr>
             </table>
@@ -31,8 +31,8 @@
             <br>
             <br>
 
-            <div>
-                <p><h3>Scores</h3></p>
+            <div class="gridTwo"> 
+                <p><h3 class="infoH">Scores</h3></p>
                 <table class="infoTable">
                 <tr>
                     <th>Name</th>

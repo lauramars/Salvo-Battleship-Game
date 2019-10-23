@@ -49,30 +49,16 @@ var gridApp= new Vue ({
         this.game = this.data.game;
         this.enemyPlayer= this.game.gamePlayers.filter(el=>el.players.userName != this.currentPlayer.userName)
         this.turn=this.userSalvos.map(el=>el.turn);
-
+        console.log(this.turn)
         
 
         this.createAllShipLocationArray();
         this.createAllSalvoUserLocationArray();
-        this.getTurn();
     
     },
 
-    // ???
-    getTurn(){
-        
-        for (let i=0; i<this.turn.length; i++)
-        {
-            return this.allSalvosUserLocation.push(this.turn[i])
-        }
-
-        // console.log(this.turn[i])
-        
-
-    },
 
     addEnemyCell(cellId) {
-
         if (this.allSalvosUserLocation.includes(cellId)){
             return `missed-location` 
         }
@@ -108,12 +94,13 @@ var gridApp= new Vue ({
 
       for (let i=0; i<this.userSalvos.length; i++){
 
-        var salvo=this.userSalvos[i]
+        var salvo=this.userSalvos[i];
+        let turn = this.userSalvos[i].turn;
 
         for (let j=0; j<salvo.locations.length; j++){
             
-            console.log(salvo.locations[j])
-
+            
+            document.getElementById("E" + salvo.locations[j]).innerHTML = turn;
             this.allSalvosUserLocation.push(salvo.locations[j]);
         }
       }
