@@ -22,14 +22,18 @@ var gamesApp = new Vue({
    created() {
       this.gameData();
       this.scoreData();
+      this.login();
+      this.logout();
       
    },
 
 
    methods: {
 
+      //-----------GAMES-----------
+
       async gameData() {
-         let url = "/api/games/"
+         let url = "/api/games"
 
          this.data = await fetch(url, {
             method: "GET",
@@ -51,7 +55,9 @@ var gamesApp = new Vue({
          }); 
 
          this.games.forEach(element => {
-         console.log(moment().startOf().fromNow(element.date));
+         console.log((moment().startOf(element.date).fromNow()));
+         
+         
          })
 
       },
@@ -84,6 +90,7 @@ var gamesApp = new Vue({
          }
      },
 
+     // -------- SCORES ------------
 
       async scoreData(){
            let url= "/api/scores/"
@@ -106,6 +113,41 @@ var gamesApp = new Vue({
          
       },
 
+// --------------LOGIN AND LOGOUT-------------------
+
+      async login(){
+      fetch("/api/login", {
+         credentials: 'include',
+         headers: {
+             'Content-Type': 'application/x-www-form-urlencoded'
+         },
+         method: 'POST',
+         body: 'userName='+ userName + '&password='+ password,
+         })
+         .then(function (data) {
+             console.log('Request success: ', data);
+         
+         })
+         .catch(function (error) {
+             console.log('Request failure: ', error);
+         });
+      },
+
+      async logout(){
+         fetch("/api/logout", {
+            credentials: 'include',
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded'
+            },
+            method: 'POST',
+        })
+            .then(function (data) {
+                console.log('Request success: ', data);
+            })
+            .catch(function (error) {
+                console.log('Request failure: ', error);
+            });
+      }
    }
 })
 

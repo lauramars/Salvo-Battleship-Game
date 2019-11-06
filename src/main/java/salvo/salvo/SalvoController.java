@@ -3,19 +3,23 @@ package salvo.salvo;
 //import com.sun.xml.internal.bind.v2.model.core.ID;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.web.bind.annotation.*;
 
 import javax.swing.*;
 import java.time.ZoneId;
 import java.util.*;
 import java.util.stream.Collectors;
-
+//import org.springframework.security.crypto.password.PasswordEncoder;
 
 @RestController
 public class SalvoController<SalvoRepository> {
 
+    @Autowired
+    private PasswordEncoder passwordEncoder;
     @Autowired
     private GameRepository gameRepository;
     @Autowired
@@ -26,6 +30,23 @@ public class SalvoController<SalvoRepository> {
     private PlayerRepository playerRepository;
 
 
+
+    @RequestMapping(path = "/api/players", method = RequestMethod.POST)
+    public ResponseEntity<Object> register(
+            @RequestParam String userName, @RequestParam String password) {
+
+        if (userName.isEmpty() || password.isEmpty()) {
+            return new ResponseEntity<>("Missing data", HttpStatus.FORBIDDEN);
+        }
+
+        if (playerRepository.findByUserName(userName) !=  null) {
+            return new ResponseEntity<>("Name already in use", HttpStatus.FORBIDDEN);
+        }
+
+        playerRepository.save(new Player(userName, passwordEncoder.encode(password)));
+        return new ResponseEntity<>(HttpStatus.CREATED);
+    }
+
     @RequestMapping("/api/games")
     public List<Map<String,Object>> getAllGames() {
         return gameRepository.findAll()
@@ -33,6 +54,7 @@ public class SalvoController<SalvoRepository> {
                 .map(game -> gameDTO(game))
                 .collect(Collectors.toList());
     }
+
 
     public List<Map<String,Object>> getAllScores(){
         return scoreRepository.findAll()
@@ -44,18 +66,23 @@ public class SalvoController<SalvoRepository> {
 
 
     @RequestMapping("/api/games_view/{gamePlayerId}")
-    private Map<String,Object> gameView (@PathVariable long gamePlayerId) {
+    private Map<String,Object> gameView (@PathVariable long gamePlayerId,
+                                         Authentication authentication) {
         Map<String, Object> map = new LinkedHashMap<>();
-
+        Player currentUser = playerRepository.findByUserName(authentication.getName()).get(0);
         GamePlayer user = gamePlayerRepository.findById(gamePlayerId).orElse(null);
         GamePlayer enemy = getEnemy(user);
         if (user != null) {
-            map.put("currentPlayer", playerDTO(user.getPlayer()));
-            map.put("game", gameDTO(user.getGame()));
-            map.put("userShips", user.getShips().stream().map(ship -> shipDTO(ship)).collect(Collectors.toList()));
-            if (enemy != null) {
-                map.put("userSalvos", user.getSalvo().stream().map(salvo -> salvoDTO(salvo)).collect(Collectors.toList()));
-                map.put("enemySalvos", enemy.getSalvo().stream().map(salvo -> salvoDTO(salvo)).collect(Collectors.toList()));
+            if (currentUser.getId() == user.getPlayer().getId()) {
+                map.put("currentPlayer", playerDTO(currentUser));
+                map.put("game", gameDTO(user.getGame()));
+                map.put("userShips", user.getShips().stream().map(ship -> shipDTO(ship)).collect(Collectors.toList()));
+                if (enemy != null) {
+                    map.put("userSalvos", user.getSalvo().stream().map(salvo -> salvoDTO(salvo)).collect(Collectors.toList()));
+                    map.put("enemySalvos", enemy.getSalvo().stream().map(salvo -> salvoDTO(salvo)).collect(Collectors.toList()));
+                }
+            } else {
+                map.put("error","Error: You can not access to this game");
             }
 
         } else {
@@ -174,5 +201,7 @@ public class SalvoController<SalvoRepository> {
         map.put ("player", score.getPlayer());
         return map;
     }
+
+
 }
 

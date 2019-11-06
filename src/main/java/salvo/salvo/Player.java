@@ -32,8 +32,9 @@ public class Player {
     public Player() {}
 
 
-    public Player(String userName) {
+    public Player(String userName, String password) {
         this.userName = userName;
+        this.password = password;
     }
 
 
@@ -61,6 +62,7 @@ public class Player {
     public void setPassword(String password) {
         this.password = password;
     }
+
 
     @JsonIgnore
     public Set<GamePlayer> getGamePlayer() {
