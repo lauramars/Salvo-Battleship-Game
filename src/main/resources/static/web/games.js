@@ -9,7 +9,9 @@ var gamesApp = new Vue({
       id: [],
       gamePlayers: [],
       players: {},
+      player: null,
       userName: "",
+      password:"",
       date: [],
       actualDate:[],
       score:[],
@@ -17,14 +19,13 @@ var gamesApp = new Vue({
       totalScore:[],
       userScore:[],
       scoreArray:[],
+      user:{},
+      
    },
 
    created() {
       this.gameData();
-      this.scoreData();
-      this.login();
-      this.logout();
-      
+      this.scoreData();      
    },
 
 
@@ -42,15 +43,21 @@ var gamesApp = new Vue({
             .then(response => response.json())
             .then(data => {
                console.log(data)
-               return data
+               return data.games;
             })
             .catch(error => console.log(error))
 
          this.games = this.data;
          console.log(this.games)
 
-         
-         this.games.forEach(element => {
+ this.gamePlayers=this.games.map(el=>el.gamePlayers)   
+ console.log(this.gamePlayers);
+
+
+ this.userName=this.games.user.userName;
+ console.log(this.userName);
+ 
+ this.games.forEach(element => {
             console.log(this.timeConversion(this.getWhenGameStarted(element.date)));
          }); 
 
@@ -122,7 +129,7 @@ var gamesApp = new Vue({
              'Content-Type': 'application/x-www-form-urlencoded'
          },
          method: 'POST',
-         body: 'userName='+ userName + '&password='+ password,
+         body: 'userName='+ this.userName + '&password='+ this.password,
          })
          .then(function (data) {
              console.log('Request success: ', data);
@@ -147,6 +154,25 @@ var gamesApp = new Vue({
             .catch(function (error) {
                 console.log('Request failure: ', error);
             });
+      },
+
+      async signUp(){
+
+      fetch("/api/players", {
+         credentials: 'include',
+         headers: {
+         'Content-Type': 'application/x-www-form-urlencoded'
+         },
+         method: 'POST',
+         body: 'userName='+ this.userName + '&password='+ this.password,
+         })
+         .then(function (data) {
+         console.log('Request success: ', data.text());
+         }).then(function () {
+         })
+         .catch(function (error) {
+         console.log('Request failure: ', error);
+         });
       }
    }
 })

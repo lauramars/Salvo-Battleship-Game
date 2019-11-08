@@ -9,47 +9,78 @@
 
 <body>
     <div id="gamesApp">
-        
+
+        <div class="header">
+            <h1 class="battleTitle">BATTLESHIP</h1>
+        </div>
+
         <div class="grid-container">
-            
+
+                <div class="gridForm">
+                       
+                        <div >
+                            <label><b>Username</b></label>
+                            <input type="text" name="email" v-model="userName" placeholder="Enter email" required>
+                            <br>
+                            <br>
+                            <label><b>Password</b></label>
+                            <input type="password" name="password" v-model="password" placeholder="Enter Password" required>
+                            <br>
+                            <br>
+                            <button id="login" @click="login">Login</button>
+                            <p>New Player? Sign up to start!</p>
+                            <button id="signUp" @click="signUp" type="submit">Sign Up</button>
+                        </div>
+        
+                     <div >
+                        
+                            <button id="logout" v-on:click="logout">Logout</button>
+                     </div>
+        
+                        </div>
+
             <div class="gridOne">
-            <p><h3 class="infoH">Salvo Games</h3></p>
-            <table class="infoTable">
-                <tr>
-                    <th>Games</th>
-                    <th>Player 1</th>
-                    <th>Player2</th>
-                </tr>
-
-                <tr v-for="game in games" v-if="games.length > 0">
-                    <td>{{timeConversion(getWhenGameStarted(game.date))}}</td>
-                    <td v-for="gp in game.gamePlayers">{{gp.players.userName}}</td>
-                </tr>
-            </table>
-        </div>
-
-            <br>
-            <br>
-
-            <div class="gridTwo"> 
-                <p><h3 class="infoH">Scores</h3></p>
+                <p>
+                    <h3 class="infoGame">Salvo Games</h3>
+                </p>
                 <table class="infoTable">
-                <tr>
-                    <th>Name</th>
-                    <th>Total</th>
-                    <th>Won</th>
-                    <th>Lost</th>
-                    <th>Tied</th>
-                </tr>
-                <tr v-for="score in scores">
-                    <td>{{score.name}}</td>
-                    <td>{{score.score}}</td>
-                    <td>{{score.win}}</td>
-                    <td>{{score.loss}}</td>
-                    <td>{{score.tie}}</td>
-                </tr>
-            </table>
-        </div>
+                    <tr>
+                        <th>Games</th>
+                        <th>Player 1</th>
+                        <th>Player2</th>
+                    </tr>
+
+                    <tr v-for="game in games" v-if="games.length > 0">
+                        <td>{{timeConversion(getWhenGameStarted(game.date))}}</td>
+                        <td v-for="gp in game.gamePlayers">{{gp.players.userName}}</td>
+                    </tr>
+                </table>
+            </div>
+
+            <br>
+            <br>
+
+            <div class="gridTwo">
+                <p>
+                    <h3 class="infoScore">Scores</h3>
+                </p>
+                <table class="infoTable">
+                    <tr>
+                        <th>Name</th>
+                        <th>Total</th>
+                        <th>Won</th>
+                        <th>Lost</th>
+                        <th>Tied</th>
+                    </tr>
+                    <tr v-for="score in scores">
+                        <td>{{score.name}}</td>
+                        <td>{{score.score}}</td>
+                        <td>{{score.win}}</td>
+                        <td>{{score.loss}}</td>
+                        <td>{{score.tie}}</td>
+                    </tr>
+                </table>
+            </div>
 
         </div>
     </div>

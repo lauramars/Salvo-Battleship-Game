@@ -32,14 +32,14 @@ public class SalvoController<SalvoRepository> {
 
 
     @RequestMapping(path = "/api/players", method = RequestMethod.POST)
-    public ResponseEntity<Object> register(
-            @RequestParam String userName, @RequestParam String password) {
-
+    public ResponseEntity<Object> register(@RequestParam String userName, @RequestParam String password) {
+        System.out.println(userName);
+        System.out.println(password);
         if (userName.isEmpty() || password.isEmpty()) {
             return new ResponseEntity<>("Missing data", HttpStatus.FORBIDDEN);
         }
-
-        if (playerRepository.findByUserName(userName) !=  null) {
+        System.out.println(playerRepository.findByUserName(userName));
+        if (!playerRepository.findByUserName(userName).isEmpty()) {
             return new ResponseEntity<>("Name already in use", HttpStatus.FORBIDDEN);
         }
 
@@ -48,11 +48,17 @@ public class SalvoController<SalvoRepository> {
     }
 
     @RequestMapping("/api/games")
-    public List<Map<String,Object>> getAllGames() {
-        return gameRepository.findAll()
+    public Map<String,Object> getAllGames( Authentication authentication) {
+        Map<String,Object> map = new LinkedHashMap<>();
+        map.put("games",gameRepository.findAll()
                 .stream()
                 .map(game -> gameDTO(game))
-                .collect(Collectors.toList());
+                .collect(Collectors.toList()));
+        if (authentication != null) {
+            map.put("user", playerRepository.findByUserName(authentication.getName()).get(0));
+        }
+
+        return map;
     }
 
 
