@@ -18,7 +18,7 @@
 
                 <div class="gridForm">
                        
-                        <div >
+                        <div v-if="!authenticated">
                             <label><b>Username</b></label>
                             <input type="text" name="email" v-model="userName" placeholder="Enter email" required>
                             <br>
@@ -27,14 +27,15 @@
                             <input type="password" name="password" v-model="password" placeholder="Enter Password" required>
                             <br>
                             <br>
-                            <button id="login" @click="login">Login</button>
+                            <button id="login" @click="login" type="submit">Login</button>
                             <p>New Player? Sign up to start!</p>
                             <button id="signUp" @click="signUp" type="submit">Sign Up</button>
                         </div>
         
-                     <div >
+                     <div v-else>
+                            <p>Hello ${#httpServletRequest.remoteUser}!</p>
                         
-                            <button id="logout" v-on:click="logout">Logout</button>
+                            <button id="logout" @click="logout" type="submit">Logout</button>
                      </div>
         
                         </div>
@@ -60,7 +61,7 @@
             <br>
             <br>
 
-            <div class="gridTwo">
+            <div class="gridTwo" v-if="authenticated">
                 <p>
                     <h3 class="infoScore">Scores</h3>
                 </p>

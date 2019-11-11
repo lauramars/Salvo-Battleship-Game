@@ -9,7 +9,7 @@ var gamesApp = new Vue({
       id: [],
       gamePlayers: [],
       players: {},
-      player: null,
+      player: [],
       userName: "",
       password:"",
       date: [],
@@ -20,13 +20,16 @@ var gamesApp = new Vue({
       userScore:[],
       scoreArray:[],
       user:{},
+      authenticated:false,
       
    },
 
    created() {
       this.gameData();
       this.scoreData();      
-   },
+      
+      },
+   
 
 
    methods: {
@@ -54,8 +57,7 @@ var gamesApp = new Vue({
  console.log(this.gamePlayers);
 
 
- this.userName=this.games.user.userName;
- console.log(this.userName);
+ 
  
  this.games.forEach(element => {
             console.log(this.timeConversion(this.getWhenGameStarted(element.date)));
@@ -108,7 +110,6 @@ var gamesApp = new Vue({
          })
             .then(response => response.json())
             .then(data => {
-               console.log(data)
                return data
             })
             .catch(error => console.log(error))
@@ -129,16 +130,18 @@ var gamesApp = new Vue({
              'Content-Type': 'application/x-www-form-urlencoded'
          },
          method: 'POST',
-         body: 'userName='+ this.userName + '&password='+ this.password,
+         body: 'userName='+ gamesApp.userName + '&password='+ gamesApp.password,
          })
          .then(function (data) {
              console.log('Request success: ', data);
-         
+            gamesApp.authenticated = true;
          })
          .catch(function (error) {
              console.log('Request failure: ', error);
          });
-      },
+   
+         },
+   
 
       async logout(){
          fetch("/api/logout", {
@@ -150,6 +153,7 @@ var gamesApp = new Vue({
         })
             .then(function (data) {
                 console.log('Request success: ', data);
+                gamesApp.authenticated = false;
             })
             .catch(function (error) {
                 console.log('Request failure: ', error);
@@ -164,7 +168,7 @@ var gamesApp = new Vue({
          'Content-Type': 'application/x-www-form-urlencoded'
          },
          method: 'POST',
-         body: 'userName='+ this.userName + '&password='+ this.password,
+         body: 'userName='+ "" + '&password='+ "",
          })
          .then(function (data) {
          console.log('Request success: ', data.text());
