@@ -21,11 +21,11 @@ var gamesApp = new Vue({
       scoreArray:[],
       user:{},
       authenticated:false,
+      alert: ''
       
    },
 
    created() {
-      this.gameData();
       this.scoreData();      
       
       },
@@ -45,12 +45,13 @@ var gamesApp = new Vue({
          })
             .then(response => response.json())
             .then(data => {
-               console.log(data)
-               return data.games;
+               return data;
             })
             .catch(error => console.log(error))
 
-         this.games = this.data;
+         this.games = this.data.games;
+         if (this.data.user)
+            this.user = this.data.user;
          console.log(this.games)
 
  this.gamePlayers=this.games.map(el=>el.gamePlayers)   
@@ -134,7 +135,11 @@ var gamesApp = new Vue({
          })
          .then(function (data) {
              console.log('Request success: ', data);
-            gamesApp.authenticated = true;
+             if (data.status == 200) {
+               gamesApp.authenticated = true;
+               gamesApp.gameData();
+             } else
+             gamesApp.alert = 'User or password are wrong'
          })
          .catch(function (error) {
              console.log('Request failure: ', error);
@@ -168,10 +173,11 @@ var gamesApp = new Vue({
          'Content-Type': 'application/x-www-form-urlencoded'
          },
          method: 'POST',
-         body: 'userName='+ "" + '&password='+ "",
+         body: 'userName='+ gamesApp.userName + '&password='+ gamesApp.password,
          })
          .then(function (data) {
          console.log('Request success: ', data.text());
+         gamesApp.authenticated = false;
          }).then(function () {
          })
          .catch(function (error) {

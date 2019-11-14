@@ -33,25 +33,25 @@
                         </div>
         
                      <div v-else>
-                            <p>Hello ${#httpServletRequest.remoteUser}!</p>
+                            <p>Hello! {{user.userName}}</p>
                         
                             <button id="logout" @click="logout" type="submit">Logout</button>
                      </div>
         
                         </div>
 
-            <div class="gridOne">
+            <div class="gridOne" >
                 <p>
                     <h3 class="infoGame">Salvo Games</h3>
                 </p>
-                <table class="infoTable">
+                <table class="infoTable" v-if="games.length > 0">
                     <tr>
                         <th>Games</th>
                         <th>Player 1</th>
                         <th>Player2</th>
                     </tr>
 
-                    <tr v-for="game in games" v-if="games.length > 0">
+                    <tr v-for="game in games">
                         <td>{{timeConversion(getWhenGameStarted(game.date))}}</td>
                         <td v-for="gp in game.gamePlayers">{{gp.players.userName}}</td>
                     </tr>
@@ -61,7 +61,7 @@
             <br>
             <br>
 
-            <div class="gridTwo" v-if="authenticated">
+            <div class="gridTwo" >
                 <p>
                     <h3 class="infoScore">Scores</h3>
                 </p>
